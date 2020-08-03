@@ -8,50 +8,29 @@ package com.twu.refactoring;
  * 
  */
 public class OrderReceipt {
-    private Order o;
+    private Order order;
+	private static final String EACH_ITEM_LINE = "%s\t%s\t%s\t%s\n";
+	private static final String TOTAL_LINE = "%s\t%s";
+	private static final double TAX_PERCENT = 0.10;
 
-    public OrderReceipt(Order o) {
-        this.o = o;
+    public OrderReceipt(Order order) {
+        this.order = order;
 	}
 
 	public String printReceipt() {
-		StringBuilder output = new StringBuilder();
-
-		// print headers
-		output.append("======Printing Orders======\n");
-
-		// print date, bill no, customer name
-//        output.append("Date - " + order.getDate();
-        output.append(o.getCustomerName());
-        output.append(o.getCustomerAddress());
-//        output.append(order.getCustomerLoyaltyNumber());
-
-		// prints lineItems
-		double totSalesTx = 0d;
-		double tot = 0d;
-		for (LineItem lineItem : o.getLineItems()) {
-			output.append(lineItem.getDescription());
-			output.append('\t');
-			output.append(lineItem.getPrice());
-			output.append('\t');
-			output.append(lineItem.getQuantity());
-			output.append('\t');
-			output.append(lineItem.totalAmount());
-			output.append('\n');
-
-			// calculate sales tax @ rate of 10%
-            double salesTax = lineItem.totalAmount() * .10;
-            totSalesTx += salesTax;
-
-            // calculate total amount of lineItem = price * quantity + 10 % sales tax
-            tot += lineItem.totalAmount() + salesTax;
+		StringBuilder printInfomation = new StringBuilder();
+		printInfomation.append("======Printing Orders======\n");
+        printInfomation.append(order.getCustomerName());
+        printInfomation.append(order.getCustomerAddress());
+		double totalSalesTax = 0d;
+		double totalAmount = 0d;
+		for (LineItem lineItem : order.getLineItems()) {
+			printInfomation.append(String.format(EACH_ITEM_LINE,lineItem.getDescription(),lineItem.getPrice(),lineItem.getQuantity(),lineItem.totalAmount()));
+            double salesTax = lineItem.totalAmount() * TAX_PERCENT;
+            totalSalesTax += salesTax;
+            totalAmount += lineItem.totalAmount() + salesTax;
 		}
-
-		// prints the state tax
-		output.append("Sales Tax").append('\t').append(totSalesTx);
-
-        // print total amount
-		output.append("Total Amount").append('\t').append(tot);
-		return output.toString();
+		printInfomation.append(String.format(TOTAL_LINE,"Sales Tax",totalSalesTax)).append(String.format(TOTAL_LINE,"Total Amount",totalAmount));
+		return printInfomation.toString();
 	}
 }
