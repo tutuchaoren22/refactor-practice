@@ -8,34 +8,39 @@ public class NumberCruncher {
     }
 
     public int countEven() {
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) count++;
-        }
-        return count;
+        return countOfGivenModDividByTwo(0);
     }
 
     public int countOdd() {
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 1) count++;
-        }
-        return count;
+        return countOfGivenModDividByTwo(1);
     }
 
     public int countPositive() {
+        return countOfPositiveAndNegative()[0];
+    }
+
+    public int countNegative() {
+        return countOfPositiveAndNegative()[1];
+    }
+    public int countOfGivenModDividByTwo(int mod){
         int count = 0;
         for (int number : numbers) {
-            if (number >= 0) count++;
+            if (number % 2 == mod){
+                count++;
+            }
         }
         return count;
     }
 
-    public int countNegative() {
-        int count = 0;
+    public int[] countOfPositiveAndNegative(){
+        int[] countOfPositiveAndNegative=new int[2];
         for (int number : numbers) {
-            if (number < 0) count++;
+            if (number < 0) {
+                countOfPositiveAndNegative[1]++;
+            } else{
+                countOfPositiveAndNegative[0]++;
+            }
         }
-        return count;
+        return countOfPositiveAndNegative;
     }
 }
