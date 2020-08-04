@@ -1,25 +1,15 @@
 package com.twu.refactoring;
 
-public class Movie {
-	public static final int  CHILDRENS = 2;
-	public static final int  REGULAR = 0;
-	public static final int  NEW_RELEASE = 1;
+public  abstract  class Movie {
 
 	private String title;
-	private int priceCode;
 
-	public Movie(String title, int priceCode) {
+	public Movie(String title) {
 		this.title = title;
-		this.priceCode = priceCode;
 	}
+	abstract double getCharge(int daysRented);
 
-	public int getPriceCode() {
-		return priceCode;
-	}
-
-	public void setPriceCode(int arg) {
-    	priceCode = arg;
-	}
+	abstract int getFrequentRenterPoints(int daysRented);
 
 	public String getTitle () {
 		return title;
